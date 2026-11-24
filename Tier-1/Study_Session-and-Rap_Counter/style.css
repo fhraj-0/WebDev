@@ -1,38 +1,196 @@
-
-*{
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+:root {
+    color-scheme: dark;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #10131d;
+    color: #f5f6ff;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
     min-height: 100vh;
+    place-items: center;
+    padding: 24px;
+    background:
+        radial-gradient(ellipse at 18% 15%, rgb(91 73 190 / 24%), transparent 38%),
+        radial-gradient(ellipse at 82% 86%, rgb(32 174 167 / 14%), transparent 34%),
+        #10131d;
 }
 
 main {
+    position: relative;
+    width: min(100%, 440px);
+    overflow: hidden;
+    padding: clamp(24px, 6vw, 40px);
     text-align: center;
-    border: 3px solid gray;
-    border-radius: 10px;
+    background: linear-gradient(145deg, #22283a, #1a1e2c 72%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 28px;
+    box-shadow: 0 28px 80px rgb(0 0 0 / 40%), inset 0 1px rgb(255 255 255 / 7%);
+    animation: card-enter 650ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+main::before {
+    position: absolute;
+    top: 0;
+    right: 12%;
+    left: 12%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #9b8cff, #5de0cb, transparent);
+    content: "";
+}
+
+#bar {
+    width: 100%;
+    height: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    background: #111522;
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 999px;
+    box-shadow: inset 0 2px 5px rgb(0 0 0 / 30%);
+}
+
+#my-bar {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #8877ff, #55d9c4);
+    border-radius: inherit;
+    box-shadow: 0 0 16px rgb(112 141 255 / 45%);
+    transition: width 450ms cubic-bezier(.22, 1, .36, 1), background-color 250ms ease;
 }
 
 .count-N h1 {
-    font-size: 100px;
+    margin: 0 0 28px;
+    color: #f6f4ff;
+    font-size: clamp(76px, 22vw, 112px);
+    font-variant-numeric: tabular-nums;
+    font-weight: 750;
+    letter-spacing: -0.08em;
+    line-height: 1;
+    text-shadow: 0 8px 36px rgb(145 126 255 / 20%);
+    animation: number-enter 500ms 120ms both;
+}
+
+.init {
+    width: calc(50% - 7px);
+    min-width: 0;
+    padding: 12px 14px;
+    color: #f5f6ff;
+    background: #141927;
+    border: 1px solid #373e54;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 16px;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.init:focus-visible {
+    outline: none;
+    background: #171d2d;
+    border-color: #9b8cff;
+    box-shadow: 0 0 0 4px rgb(155 140 255 / 16%);
+}
+
+.max-r {
+    color: #60e2bd;
 }
 
 .btn {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 
 .btn button {
-    padding: 10px 20px;
-    margin: 30px 10px;
-    border: 2px solid rgb(1, 0, 0);
+    flex: 1;
+    min-height: 48px;
+    padding: 12px 18px;
+    color: #fff;
+    background: linear-gradient(135deg, #8270f3, #6757d8);
+    border: 1px solid rgb(255 255 255 / 12%);
+    border-radius: 13px;
+    box-shadow: 0 8px 20px rgb(103 87 216 / 22%);
+    font: inherit;
     font-size: 15px;
-    border-radius: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
+}
+
+.btn button + button {
+    color: #d7dbea;
+    background: #292f41;
+    box-shadow: none;
+}
+
+.btn button:hover {
+    filter: brightness(1.12);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgb(103 87 216 / 30%);
+}
+
+.btn button:active {
+    transform: translateY(0) scale(.98);
+}
+
+.btn button:focus-visible {
+    outline: 3px solid #b8adff;
+    outline-offset: 3px;
+}
+
+@keyframes card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes number-enter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 380px) {
+    body {
+        padding: 16px;
+    }
+
+    .init {
+        padding-inline: 10px;
+        font-size: 15px;
+    }
+
+    .btn button {
+        padding-inline: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
