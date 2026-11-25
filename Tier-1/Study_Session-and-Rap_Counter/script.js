@@ -33,7 +33,10 @@ function rander(currentCount) {
     const maxValue = Number(countMax.value);
     const percentage = maxValue > 0 ? (currentCount / maxValue) * 100 : 0;
     myBar.style.width = `${percentage}%`;
-}
+    countDisplay.classList.toggle("max-r",
+        maxValue > 0 && currentCount >= maxValue
+    );
+};
 
 countInput.addEventListener("input", () => {
     currentVal = Number(countInput.value);
